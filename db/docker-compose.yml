@@ -1,0 +1,13 @@
+services:
+  db:
+    build:
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: florence
+      MYSQL_DATABASE: users
+      MYSQL_USER: florence
+      MYSQL_PASSWORD: florence
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
