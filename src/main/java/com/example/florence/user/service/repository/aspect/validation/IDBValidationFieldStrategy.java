@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IDBValidationFieldStrategy {
@@ -13,7 +14,7 @@ public interface IDBValidationFieldStrategy {
     void validateField(DBUser user);
 
     default List<String> validateRequiredField(Object object, String objectName) throws DBUserException {
-        List<String> errorMessageValidation = null;
+        List<String> errorMessageValidation = new ArrayList<>();
         if (object == null) {
             //throw new DBUserException("Object cannot be null", HttpStatus.BAD_REQUEST);
             //errorMessageValidation = "Object" + objectName + "cannot be null";

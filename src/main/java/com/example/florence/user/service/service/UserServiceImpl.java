@@ -8,12 +8,11 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService{
 
-    private IUserRepositoryService repositoryService;
+    private final IUserRepositoryService repositoryService;
 
     @Autowired
     public UserServiceImpl(IUserRepositoryService repositoryService) {

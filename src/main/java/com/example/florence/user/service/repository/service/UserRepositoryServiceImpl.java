@@ -2,6 +2,7 @@ package com.example.florence.user.service.repository.service;
 
 import com.example.florence.user.service.repository.connector.UserRepository;
 import com.example.florence.user.service.repository.model.DBUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,9 @@ import java.util.Optional;
 @Service
 public class UserRepositoryServiceImpl implements IUserRepositoryService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    @Autowired
     public UserRepositoryServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

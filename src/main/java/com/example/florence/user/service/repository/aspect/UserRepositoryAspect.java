@@ -54,7 +54,7 @@ public class UserRepositoryAspect {
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         log.info("Succeded execution of method: " + joinPoint.getSignature().getName());
         Optional.ofNullable(result)
-            .ifPresent(data -> log.info("User DB response: " + data.toString()));
+            .ifPresent(data -> log.info("User DB response: " + data));
     }
 
     @AfterThrowing(pointcut = "execution(* it.intessera.app.service.user.service.repoconnector.UserServiceConnectorImpl.*(..))", throwing = "ex")
@@ -65,10 +65,8 @@ public class UserRepositoryAspect {
     }
 
     private void populateSpecificExceptionData(Exception ex) {
-        if (ex instanceof SQLException) {
+        if (ex instanceof SQLException sqlEx) {
             errorMessage.append(", SQLException - ");
-
-            SQLException sqlEx = (SQLException) ex;
 
             if (sqlEx.getMessage().contains("Duplicate entry") || sqlEx.getMessage().contains("foreign key constraint")) {
                 statusError = HttpStatus.BAD_REQUEST;

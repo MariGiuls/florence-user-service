@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 public class UserController implements UserApi {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     @Autowired
     public UserController(IUserService userService) {

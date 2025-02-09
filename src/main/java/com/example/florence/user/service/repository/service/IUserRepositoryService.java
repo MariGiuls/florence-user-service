@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IUserRepositoryService {
     DBUser save(DBUser user);
-    public DBUser change(DBUser user);
+    DBUser change(DBUser user);
     void delete(DBUser user);
     List<DBUser> findAll();
     Optional<DBUser> findById(String id);
