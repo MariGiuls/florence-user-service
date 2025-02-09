@@ -12,7 +12,7 @@ services:
       - MYSQL_USER=florence
       - MYSQL_PASSWORD=florence
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - shared-network
 
@@ -21,14 +21,14 @@ services:
     depends_on:
       - db
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     restart: on-failure
     ports:
       - "8080:8080"
       - "5005:5005" # debug
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/intessere?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/users?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: florence
       SPRING_DATASOURCE_PASSWORD: florence
     stdin_open: true

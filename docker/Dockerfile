@@ -2,11 +2,7 @@ FROM maven:3.8.5-openjdk-17
 EXPOSE 8080 5005
 
 WORKDIR /demo
-COPY ../pom.xml .
-
-RUN mvn dependency:go-offline
-
-COPY ../src ./src
+COPY . .
 RUN mvn clean install
 
 #CMD mvn spring-boot:run
