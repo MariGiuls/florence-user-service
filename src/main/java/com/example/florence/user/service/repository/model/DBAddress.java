@@ -11,7 +11,7 @@ import lombok.Getter;
 @Table(name = "address")
 public class DBAddress {
     @Id
-    private String id;
+    private final String id;
     @Column(nullable = false)
     private final String street;
     @Column(nullable = false)

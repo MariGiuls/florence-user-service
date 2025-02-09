@@ -1,5 +1,8 @@
 package com.example.florence.user.service.repository.model;
 
+import lombok.Getter;
+
+@Getter
 public enum ValidationMethodEnum {
     SAVE("SAVE"),
 
@@ -11,13 +14,9 @@ public enum ValidationMethodEnum {
 
     FIND_BY("FIND_BY");
 
-    private String value;
+    private final String value;
 
     ValidationMethodEnum(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 }

@@ -19,7 +19,7 @@ import java.util.*;
 @Component
 public class UserRepositoryAspect {
 
-    private StringBuilder errorMessage = new StringBuilder("Method throw exception: ");
+    private final StringBuilder errorMessage = new StringBuilder("Method throw exception: ");
 
     private final Map<ValidationMethodEnum, IDBValidationFieldStrategy> validationFieldStrategy;
 
