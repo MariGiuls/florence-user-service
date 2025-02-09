@@ -1,0 +1,155 @@
+openapi: 3.0.3
+info:
+  title: User API
+  description: API per la gestione degli utenti.
+  version: 1.0.0
+servers:
+  - url: https://api.florence.user.it/
+    description: Prod Environment
+  - url: https://api.dev.florence.user/ass
+    description: TEST Environment
+tags:
+  - name: User
+paths:
+  /user:
+    post:
+      summary: Register a new user
+      description: Register a new user on florence system.
+      tags:
+        - User
+      operationId: user
+      requestBody:
+        description: Registration User data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: New User registered.
+        '400':
+          description: Registration data error.
+
+    get:
+      summary: Find User
+      description: Find a list of user based on search criteria.
+      tags:
+        - User
+      operationId: getUser
+      requestBody:
+        description: Registration User data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User List founded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Not User founded.
+    put:
+      summary: Change user information.
+      description: Change a user information on an already present user in florence system
+      tags:
+        - User
+      operationId: changeUser
+      requestBody:
+        description: Changed user information.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User changed properly.
+        '400':
+          description: Error on user change data information.
+    delete:
+      summary: Delete user information.
+      description: Delete a user from florence system
+      tags:
+        - User
+      operationId: deleteUser
+      requestBody:
+        description: Delete user information.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User deleted properly.
+        '400':
+          description: Error on delete user operation.
+
+
+  /user/{id}:
+    get:
+      summary: Retrieve a user based on the id.
+      description: Retrieve a florence registered user based on the id information.
+      tags:
+        - User
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: unique user id
+      responses:
+        '200':
+          description: User founded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not founded
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        fiscalCode:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        streetNumber:
+          type: string
+        province:
+          type: string
+        cap:
+          type: string
+        country:
+          type: string
