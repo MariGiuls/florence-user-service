@@ -40,7 +40,7 @@ public class UserRepositoryServiceImpl implements IUserRepositoryService {
     }
 
     @Override
-    public Optional<DBUser> findById(String id) {
+    public Optional<DBUser> findById(Integer id) {
         return userRepository.findById(id);
     }
 

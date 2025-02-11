@@ -1,9 +1,6 @@
 package com.example.florence.user.service.repository.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
@@ -11,19 +8,26 @@ import lombok.Getter;
 @Table(name = "address")
 public class DBAddress {
     @Id
-    private final String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(nullable = false)
-    private final String street;
+    private String street;
+
     @Column(nullable = false)
-    private final String streetNumber;
+    private String streetNumber;
+
     @Column(nullable = false)
-    private final String city;
+    private String city;
+
     @Column(nullable = false)
-    private final String cap;
+    private String cap;
+
     @Column(nullable = false)
-    private final String province;
+    private String province;
+
     @Column(nullable = false)
-    private final String country;
+    private String country;
 
     private DBAddress(final Builder builder) {
         this.id = builder.id;
@@ -35,12 +39,14 @@ public class DBAddress {
         this.country = builder.country;
     }
 
+    protected DBAddress() {}
+
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
-        private String id;
+        private Integer id;
         private String street;
         private String streetNumber;
         private String city;
@@ -48,7 +54,7 @@ public class DBAddress {
         private String province;
         private String country;
 
-        public Builder withId(String id) {
+        public Builder withId(Integer id) {
             this.id = id;
             return this;
         }
