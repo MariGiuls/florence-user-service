@@ -28,9 +28,12 @@ paths:
       responses:
         '201':
           description: New User registered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           description: Registration data error.
-
     get:
       summary: Find User
       description: Find a list of user based on search criteria.
@@ -71,6 +74,10 @@ paths:
       responses:
         '201':
           description: User changed properly.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           description: Error on user change data information.
     delete:

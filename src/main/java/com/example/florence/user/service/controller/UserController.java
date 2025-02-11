@@ -27,12 +27,12 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Void> user(User body) {
-        ResponseEntity<Void> response;
+    public ResponseEntity<User> user(User body) {
+        ResponseEntity<User> response;
         log.info("user save request: " + body);
         try {
-            userService.save(body);
-            response = new ResponseEntity<>(HttpStatus.OK);
+            User user = userService.save(body);
+            response = ResponseEntity.ok(user);
         } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
@@ -41,12 +41,12 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Void> changeUser(User body) {
-        ResponseEntity<Void> response;
+    public ResponseEntity<User> changeUser(User body) {
+        ResponseEntity<User> response;
         log.info("user change request: " + body);
         try {
-            userService.change(body);
-            response = new ResponseEntity<>(HttpStatus.OK);
+            User user = userService.change(body);
+            response = ResponseEntity.ok(user);
         } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
