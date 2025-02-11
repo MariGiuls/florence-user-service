@@ -14,7 +14,9 @@ public enum ValidationMethodEnum {
 
     FIND_BY_ID("findById"),
 
-    FIND_BY("findBy");
+    FIND_BY("findBy"),
+
+    UPLOAD_USERS_CSV("uploadUsersCsv");
 
     private final String value;
 

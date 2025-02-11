@@ -2,6 +2,7 @@ package com.example.florence.user.service.service.mapper;
 
 import com.example.florence.user.service.repository.model.DBUser;
 import it.florence.generate.model.User;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
-public class UserServiceMapper {
+public class UserServiceMapper implements IDataMapper{
 
     private AddressServiceMapper addressServiceMapper;
 
@@ -59,15 +60,15 @@ public class UserServiceMapper {
                 .orElse(null);
     }
 
-    private BigDecimal retrieveId(Integer id) {
-        return Optional.ofNullable(id)
-                .map(BigDecimal::valueOf)
-                .orElse(null);
-    }
-
-    private Integer retrieveId(BigDecimal id) {
-        return Optional.ofNullable(id)
-                .map(BigDecimal::intValue)
-                .orElse(null);
+    public User mapperUserFromCDV(CSVRecord record) {
+        User user = new User();
+        //TODO implement the logic for the change operation from csv
+        //user.setId(retrieveId(record.get("id")));
+        user.setName(record.get("name"));
+        user.setSurname(record.get("surname"));
+        user.setEmail(record.get("email"));
+        user.setFiscalCode(record.get("fiscalCode"));
+        user.setAddress(addressServiceMapper.mapperAddressFromCSV(record));
+        return user;
     }
 }
