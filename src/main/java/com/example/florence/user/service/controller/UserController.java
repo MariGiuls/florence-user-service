@@ -6,9 +6,11 @@ import it.florence.generate.api.UserApi;
 import it.florence.generate.model.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,7 +22,7 @@ public class UserController implements UserApi {
     private final IUserService userService;
 
     @Autowired
-    public UserController(IUserService userService) {
+    public UserController(@Qualifier("userServiceCSVImpl")IUserService userService) {
         this.userService = userService;
     }
 
@@ -85,6 +87,20 @@ public class UserController implements UserApi {
         log.info("delete user request: " + body);
         try {
             userService.delete(body);
+            response = new ResponseEntity<>(HttpStatus.OK);
+        } catch (UserException e) {
+            log.error("error: " + e.getMessage());
+            response = new ResponseEntity<>(e.getStatusCode());
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseEntity<Void> uploadUsersCsv(MultipartFile file) {
+        ResponseEntity<Void> response;
+        log.info("uploadUsersCsv user request: " + file.getContentType());
+        try {
+            userService.uploadUsersCsv(file);
             response = new ResponseEntity<>(HttpStatus.OK);
         } catch (UserException e) {
             log.error("error: " + e.getMessage());

@@ -117,6 +117,32 @@ paths:
         '404':
           description: User not founded
 
+  /user/upload:
+    post:
+      summary: Upload users from CSV
+      description: Upload a CSV file to create or update users in the system.
+      operationId: uploadUsersCsv
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file containing user data.
+      responses:
+        '200':
+          description: File uploaded successfully.
+        '400':
+          description: Invalid file format.
+        '500':
+          description: Server error.
+
 components:
   schemas:
     User:

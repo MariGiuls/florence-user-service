@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -37,14 +36,13 @@ public class UserServiceAspect {
 
     @Before("userServiceMethods()")
     public void logBefore(JoinPoint joinPoint) {
-        log.info("method: " + joinPoint.getSignature().getName() + " with arguments: " + Arrays.toString(joinPoint.getArgs()));
-
+        ValidationMethodEnum methodEnum = ValidationMethodEnum.fromValue(joinPoint.getSignature().getName());
+        log.info("SERIVCE - method: " + methodEnum + " with arguments: " + Arrays.toString(joinPoint.getArgs()));
         Object firstArg = joinPoint.getArgs().length > 0 ? joinPoint.getArgs()[0] : null;
 
         if (firstArg instanceof String) {
-            validateString(joinPoint);
+            validateString(firstArg);
         } else if (firstArg instanceof User) {
-            ValidationMethodEnum methodEnum = ValidationMethodEnum.fromValue(joinPoint.getSignature().getName());
             validationStrategy.get(methodEnum).validateField((User) firstArg);
         }
     }
@@ -64,13 +62,15 @@ public class UserServiceAspect {
         throw new UserServiceException(errorMessage.toString(), statusError);
     }
 
-    private void validateString(JoinPoint joinPoint) {
-        Arrays.stream(joinPoint.getArgs())
-                .filter(Objects::nonNull)
-                .filter(data -> data instanceof String)
-                .map(data -> (String) data)
-                .filter(data -> !data.isEmpty())
-                .findFirst()
-                .orElseThrow(() -> new UserServiceException("Required parameter String found", HttpStatus.BAD_REQUEST));
+    private void validateString(Object arg) {
+        Optional.ofNullable(arg)
+            .map(data -> (String) data)
+            .filter(data -> !data.isEmpty())
+            .orElseThrow(() -> new UserServiceException("Required parameter String found", HttpStatus.BAD_REQUEST));
+    }
+
+    private void validate(Object arg) {
+        Optional.ofNullable(arg)
+                .orElseThrow(() -> new UserServiceException("Required parameter not found", HttpStatus.BAD_REQUEST));
     }
 }

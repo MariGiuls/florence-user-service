@@ -2,13 +2,13 @@ package com.example.florence.user.service.service.mapper;
 
 import com.example.florence.user.service.repository.model.DBAddress;
 import it.florence.generate.model.Address;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
-public class AddressServiceMapper {
+public class AddressServiceMapper implements IDataMapper{
 
     public DBAddress mapperToDB(Address address) {
         return Optional.ofNullable(address)
@@ -40,18 +40,6 @@ public class AddressServiceMapper {
                 .orElse(null);
     }
 
-    private BigDecimal retrieveId(Integer id) {
-        return Optional.ofNullable(id)
-                .map(BigDecimal::valueOf)
-                .orElse(null);
-    }
-
-    private Integer retrieveId(BigDecimal id) {
-        return Optional.ofNullable(id)
-                .map(BigDecimal::intValue)
-                .orElse(null);
-    }
-
     public DBAddress mapperChangeAddressForDB(Address address, DBAddress dbAddress) {
         return Optional.ofNullable(address)
                 .map(data -> DBAddress.builder()
@@ -64,5 +52,18 @@ public class AddressServiceMapper {
                         .withCountry(data.getCountry() != null ? data.getCountry() : dbAddress.getCountry())
                         .build())
                 .orElse(dbAddress);
+    }
+
+    public Address mapperAddressFromCSV(CSVRecord record) {
+        Address address = new Address();
+        //TODO implement the logic for the change operation from csv
+        //address.setId(retrieveId(record.get("address_id")));
+        address.setCity(record.get("address_city"));
+        address.setStreet(record.get("address_street"));
+        address.setStreetNumber(record.get("address_streetNumber"));
+        address.setCap(record.get("address_fiscalCode"));
+        address.setProvince(record.get("address_province"));
+        address.setCountry(record.get("address_country"));
+        return address;
     }
 }

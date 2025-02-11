@@ -13,4 +13,5 @@ public interface IUserService {
     List<User> findAll();
     User findById(BigDecimal id);
     List<User> findBy(User user);
+    void uploadUsersCsv(MultipartFile file);
 }

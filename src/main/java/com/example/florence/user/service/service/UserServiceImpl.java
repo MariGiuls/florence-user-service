@@ -9,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service
-public class UserServiceImpl implements IUserService{
+@Service("userServiceImpl")
+public class UserServiceImpl implements IUserService {
 
     private final IUserRepositoryService repositoryService;
-    private UserServiceMapper mapper;
+    private final UserServiceMapper mapper;
 
     @Autowired
     public UserServiceImpl(IUserRepositoryService repositoryService, UserServiceMapper mapper) {
@@ -70,4 +71,8 @@ public class UserServiceImpl implements IUserService{
                 .toList();
     }
 
+    @Override
+    public void uploadUsersCsv(MultipartFile file) {
+        throw new UserServiceException("No access available for this method. Use userServiceCSVImpl bean", HttpStatus.BAD_REQUEST);
+    }
 }
