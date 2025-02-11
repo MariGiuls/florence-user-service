@@ -1,6 +1,6 @@
 package com.example.florence.user.service.controller;
 
-import com.example.florence.user.service.exception.UserServiceException;
+import com.example.florence.user.service.exception.UserException;
 import com.example.florence.user.service.service.IUserService;
 import it.florence.generate.api.UserApi;
 import it.florence.generate.model.User;
@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Log4j2
@@ -30,7 +31,7 @@ public class UserController implements UserApi {
         try {
             userService.save(body);
             response = new ResponseEntity<>(HttpStatus.OK);
-        } catch (UserServiceException e) {
+        } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
         }
@@ -44,7 +45,7 @@ public class UserController implements UserApi {
         try {
             userService.change(body);
             response = new ResponseEntity<>(HttpStatus.OK);
-        } catch (UserServiceException e) {
+        } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
         }
@@ -58,21 +59,20 @@ public class UserController implements UserApi {
         try {
             List<User> users = userService.findBy(body);
             response = ResponseEntity.ok(users);
-        } catch (UserServiceException e) {
+        } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
         }
         return response;
     }
 
-    @Override
-    public ResponseEntity<User> getUserById(String id) {
+    public ResponseEntity<User> getUserById(BigDecimal id) {
         ResponseEntity<User> response;
         log.info("user find by id request: " + id);
         try {
             User user = userService.findById(id);
             response = ResponseEntity.ok(user);
-        } catch (UserServiceException e) {
+        } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
         }
@@ -86,7 +86,7 @@ public class UserController implements UserApi {
         try {
             userService.delete(body);
             response = new ResponseEntity<>(HttpStatus.OK);
-        } catch (UserServiceException e) {
+        } catch (UserException e) {
             log.error("error: " + e.getMessage());
             response = new ResponseEntity<>(e.getStatusCode());
         }

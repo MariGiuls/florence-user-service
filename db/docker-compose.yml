@@ -4,7 +4,7 @@ services:
       dockerfile: Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: florence
-      MYSQL_DATABASE: users
+      MYSQL_DATABASE: florence
       MYSQL_USER: florence
       MYSQL_PASSWORD: florence
     volumes:

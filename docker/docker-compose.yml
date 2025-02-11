@@ -28,9 +28,10 @@ services:
       - "8080:8080"
       - "5005:5005" # debug
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/users?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/florence?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: florence
       SPRING_DATASOURCE_PASSWORD: florence
+      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
     stdin_open: true
     tty: true
     networks:

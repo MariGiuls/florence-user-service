@@ -105,7 +105,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: number
           description: unique user id
       responses:
         '200':
@@ -117,14 +117,13 @@ paths:
         '404':
           description: User not founded
 
-
 components:
   schemas:
     User:
       type: object
       properties:
         id:
-          type: string
+          type: number
         name:
           type: string
         surname:
@@ -140,7 +139,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: number
         city:
           type: string
         street:

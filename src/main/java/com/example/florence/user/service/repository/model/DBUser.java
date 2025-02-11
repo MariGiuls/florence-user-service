@@ -5,10 +5,12 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class DBUser {
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -42,14 +44,14 @@ public class DBUser {
     }
 
     public static class Builder {
-        private String id;
+        private Integer id;
         private String name;
         private String surname;
         private String email;
         private String fiscalCode;
         private DBAddress address;
 
-        public Builder withId(String id) {
+        public Builder withId(Integer id) {
             this.id = id;
             return this;
         }
