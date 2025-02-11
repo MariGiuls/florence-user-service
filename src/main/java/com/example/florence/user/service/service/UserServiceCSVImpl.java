@@ -9,7 +9,6 @@ import org.apache.commons.csv.CSVParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,14 +20,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service("userServiceCSVImpl")
 public class UserServiceCSVImpl implements IUserService {
 
-    private IUserService userServiceImpl;
-    private UserServiceMapper mapper;
+    private final IUserService userServiceImpl;
+    private final UserServiceMapper mapper;
 
     @Autowired
     public UserServiceCSVImpl(@Qualifier("userServiceImpl")IUserService userServiceImpl, UserServiceMapper mapper) {
@@ -79,9 +77,13 @@ public class UserServiceCSVImpl implements IUserService {
                      .withIgnoreHeaderCase()
                      .withTrim())) {
 
-            List<User> users = StreamSupport.stream(csvParser.getRecords().spliterator(), false)
-                    .map(data -> mapper.mapperUserFromCDV(data))
+            List<User> users = csvParser.getRecords()
+                    .stream()
+                    .map(mapper::mapperUserFromCDV)
                     .toList();
+
+            if (users.isEmpty())
+                throw new UserServiceException("No User declared on the csv file", HttpStatus.BAD_REQUEST);
 
             saveAllTheUser(users);
 
@@ -98,7 +100,7 @@ public class UserServiceCSVImpl implements IUserService {
                 save(data);
             } catch (UserServiceException ex) {
                 errorFiscalCode.add(data.getFiscalCode());
-                log.warn("User refused " + data.getFiscalCode() + " because of " + ex.getMessage());
+                log.warn("User refused {} because of {}", data.getFiscalCode(), ex.getMessage());
             }
         });
         if (users.size() == errorFiscalCode.size())
