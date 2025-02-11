@@ -51,14 +51,14 @@ public class UserServiceImpl implements IUserService {
     public List<User> findAll() {
         return repositoryService.findAll()
                 .stream()
-                .map(data ->  mapper.mapperToWeb(data))
+                .map(mapper::mapperToWeb)
                 .toList();
     }
 
     @Override
     public User findById(BigDecimal id) {
         return repositoryService.findById(id.intValue())
-                .map(data ->  mapper.mapperToWeb(data))
+                .map(mapper::mapperToWeb)
                 .orElse(null);
     }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements IUserService {
         DBUser u = mapper.mapperToDB(user);
         return repositoryService.findBy(Example.of(u))
                 .stream()
-                .map(data -> mapper.mapperToWeb(data))
+                .map(mapper::mapperToWeb)
                 .toList();
     }
 
