@@ -6,10 +6,8 @@ import com.example.florence.user.service.repository.service.IUserRepositoryServi
 import com.example.florence.user.service.service.mapper.UserServiceMapper;
 import it.florence.generate.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
 
     private final IUserRepositoryService repositoryService;
-    private UserServiceMapper mapper;
+    private final UserServiceMapper mapper;
 
     @Autowired
     public UserServiceImpl(IUserRepositoryService repositoryService, UserServiceMapper mapper) {

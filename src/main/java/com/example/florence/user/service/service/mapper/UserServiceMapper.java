@@ -6,13 +6,12 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
 public class UserServiceMapper implements IDataMapper{
 
-    private AddressServiceMapper addressServiceMapper;
+    private final AddressServiceMapper addressServiceMapper;
 
     @Autowired
     public UserServiceMapper(AddressServiceMapper addressServiceMapper) {

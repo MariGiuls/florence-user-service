@@ -2,11 +2,9 @@ package com.example.florence.user.service.service.mapper;
 
 import com.example.florence.user.service.repository.model.DBAddress;
 import it.florence.generate.model.Address;
-import it.florence.generate.model.User;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component

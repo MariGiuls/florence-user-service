@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface IDataMapper {
 
-    static final String REGEX = "^\\d+$";
+    String REGEX = "^\\d+$";
 
     default BigDecimal retrieveId(Integer id) {
         return Optional.ofNullable(id)
